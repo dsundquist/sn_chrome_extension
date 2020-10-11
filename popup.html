@@ -1,0 +1,55 @@
+<!-- This is one ugly page, should spend some time making it look better -->
+<html>
+    <head>
+        <link rel="stylesheet" href="popup.css">
+    </head>
+
+    <Title>An Extension</Title>
+
+    <center>
+    <div id="main">
+        <hr>
+        Set Max Comment Height
+        <br>
+        <br>
+        <b>
+        <div id="title">Disabled</div></b>
+        
+        <label class="switch">
+        <input type="checkbox" id="checkbox">
+        <span class="slider round"></span>
+        </label>
+        
+        <br>
+        <div id="input">
+            <input type="text" id="inputSize" max="1">
+            <i>pixels</i>
+            <br>
+            <button class="button" type="submit" id="toggleButton">resize</button>
+        </div>
+        <br>
+        
+        <hr>
+        Fix White Space On Bottom 
+        <br>
+        <br>
+        <b>
+        <div id="title2">Disabled</div></b>
+        <label class="switch">
+        <input type="checkbox" id="checkbox2">
+        <span class="slider round"></span>
+        </label>
+        <hr>
+        <div id="timer">00:00:00</div>
+        <button class="button" type="submit" id="startButton">start</button>
+        <button class="button" type="submit" id="stopButton">stop</button>
+        <button class="button" type="submit" id="resetButton">reset</button>
+        <hr>
+        <button class="button" type="submit" id="updateContactAttempt">Contact Template</button>
+        <button class="button" type="submit" id="updateNewTicket">New Ticket Template</button>
+        
+    </div>
+    </center>
+    <script src="./stopwatch.js" type="text/javascript"></script>
+    <script src="./popup.js" type="text/javascript"></script>
+</html>

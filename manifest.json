@@ -1,0 +1,33 @@
+{
+    "manifest_version": 2,
+   
+    "name": "Reduce Comment Text Box Field for Service Now",
+    "version": "0.1.6",
+    "description": "Adding some custom enhancements to Service Now",
+   
+    "browser_action" : {
+      "default_title": "Service Now Extension",
+      "default_popup": "popup.html"
+    },
+
+    "permissions" : [
+      "tabs"
+    ],
+
+    "content_scripts": [{
+      "css": ["styles.css"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "matches": ["https://corebts.service-now.com/*"]
+      
+    }],
+
+    "background": {
+      "scripts": [
+        "stopwatch.js",
+        "background.js"
+      ]
+    }
+    
+   
+  }
