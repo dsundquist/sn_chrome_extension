@@ -7,6 +7,7 @@
 var enabled = false;
 var maxHeight = 800;
 var fixWhiteSpace = false;
+var resolutionnotes = false;
 
 //Print out current values
 console.log('Background Script Created');
@@ -36,6 +37,7 @@ function gotMessage(message, sender, sendResponse) {
             header: "successful",
             enabled: enabled,
             maxHeight: maxHeight,
+            resolutionnotes: resolutionnotes
         }
 
         // We updated something so lets inform all the tabs
@@ -50,7 +52,8 @@ function gotMessage(message, sender, sendResponse) {
             header: "successful",
             enabled: enabled,
             maxHeight: maxHeight,
-            fixWhiteSpace: fixWhiteSpace
+            fixWhiteSpace: fixWhiteSpace,
+            resolutionnotes: resolutionnotes
         }
         sendResponse(msg);
     
@@ -62,7 +65,8 @@ function gotMessage(message, sender, sendResponse) {
             header: "successful",
             enabled: enabled,
             maxHeight: maxHeight,
-            fixWhiteSpace: fixWhiteSpace
+            fixWhiteSpace: fixWhiteSpace,
+            resolutionnotes: resolutionnotes
         }
         sendResponse(msg);
     } else if (message.header == "startWatch"){
@@ -97,6 +101,21 @@ function gotMessage(message, sender, sendResponse) {
         chrome.tabs.query({}, function(tabs) {
             for (var i=0; i<tabs.length; ++i) {
                 chrome.tabs.sendMessage(tabs[i].id, {header: "fixWhiteSpace", fixWhiteSpace : fixWhiteSpace});
+            }
+        });
+
+        msg = {
+            header: "successful"
+        }
+        sendResponse(msg);
+    } else if (message.header == "setResolutionNotes") {
+        console.log("Setting Resolution Notes Boolean: " + message.resolutionnotes);
+        resolutionnotes = message.resolutionnotes;
+
+        // Send it to the content script 
+        chrome.tabs.query({}, function(tabs) {
+            for (var i=0; i<tabs.length; ++i) {
+                chrome.tabs.sendMessage(tabs[i].id, {header: "setResolutionNotes", resolutionnotes : resolutionnotes});
             }
         });
 

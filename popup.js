@@ -7,10 +7,12 @@
 var button = document.getElementById('toggleButton');
 var checkboxFixComment = document.getElementById('checkbox');
 var checkboxFixWhiteSpace = document.getElementById('checkbox2');
+var checkboxAddResolution = document.getElementById('checkbox3');
 var inputbox = document.getElementById('inputSize');
 button.addEventListener('click', setToggle);
 checkboxFixComment.addEventListener('click',setToggle);
 checkboxFixWhiteSpace.addEventListener('click', setFixWhiteSpace);
+checkboxAddResolution.addEventListener('click', setResolutionNotes);
 
 // Code copied from stackoverflow to make the enter key work as one would expect, for resizing boxes 
 inputbox.addEventListener("keyup", function(event) {
@@ -113,6 +115,13 @@ window.onload = function(){
         document.getElementById("checkbox2").checked = false;
         document.getElementById("title2").innerHTML = "Disabled";
       } 
+      if(response.resolutionnotes == true){
+        document.getElementById("checkbox3").checked = true;
+        document.getElementById("title3").innerHTML = "Enabled";
+      } else if(response.fixWhiteSpace == false) {
+        document.getElementById("checkbox3").checked = false;
+        document.getElementById("title3").innerHTML = "Disabled";
+      } 
     } else {
       console.log("Didn't get a successful response..");
     }
@@ -189,6 +198,32 @@ function setFixWhiteSpace(){
   var msg = {
     header: "fixWhiteSpace",
     fixWhiteSpace: toggleState
+  }
+
+  chrome.runtime.sendMessage(msg, function(response) {
+    if(response.header == "successful" ){
+      console.log("Message successfully sent and got a response");
+      console.log(response);
+    } else {
+      console.log("Didn't get a successful response");
+    }
+  });
+
+}
+
+// Send an update to the background script on resolutionnotes boolean 
+function setResolutionNotes(){
+  var toggleState = document.getElementById("checkbox3").checked;
+
+  if(toggleState){
+    document.getElementById("title3").innerHTML = "Enabled";
+  } else {
+    document.getElementById("title3").innerHTML = "Disabled";
+  }
+
+  var msg = {
+    header: "setResolutionNotes",
+    resolutionnotes: toggleState
   }
 
   chrome.runtime.sendMessage(msg, function(response) {

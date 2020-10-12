@@ -5,7 +5,7 @@
 
 body {
   font-family: 'Noto Sans', sans-serif;
-  min-width: 200px;
+  min-width: 250px;
   min-height: 150px;
   border: 0px;
   background-color: rgb(180, 180, 180);
@@ -29,6 +29,12 @@ body {
   margin-bottom: 8px;
   font-size: 16;
 }
+
+#title3{
+  margin-bottom: 8px;
+  font-size: 16;
+}
+
 
 #timer{
   font-size: 32;

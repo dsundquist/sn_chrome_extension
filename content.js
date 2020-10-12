@@ -7,6 +7,7 @@
 var enabled = false;
 var maxHeight = 0;
 var fixWhiteSpace = false;
+var resolutionnotes = false;
 
 var callText = "Customer Contact Informed: \n Phone Number/Email Used: \n Time Contacted:  \n Task(s) Performed: \n - Left Voicemail \n Next Step:"
 var newTicketText = "Contact Name: \nContact Phone Number: \nContact Email Address: \n\nSerial Number or Contract Number: \nValidated? (Y/N): \nDevice Make/Model: \nDevice IOS image/Firmware/OS version: \n\nSeverity/Impact of Issue (Number of users affected, locations): \n\nDescription of Issue: \nWhen did it start: \nRecent changes: \nError messages / Indicator lights: \n\nCustomer troubleshooting performed: \n";
@@ -26,8 +27,12 @@ window.onload = function(){
         enabled = response.enabled;
         maxHeight = response.maxHeight;
         fixWhiteSpace = response.fixWhiteSpace;
+        resolutionnotes = response.resolutionnotes;
         if (fixWhiteSpace){
           removeWhiteSpace();
+        }
+        if(resolutionnotes){
+          setResolutionNotes();
         }
         reSize();
         
@@ -68,7 +73,16 @@ function gotMessage(message, sender, sendResponse) {
     fixWhiteSpace = message.fixWhiteSpace;
     console.log("Got Fix Whitespace Message");
     console.log(fixWhiteSpace);
+    sendResponse({header: "successful"});
     removeWhiteSpace(fixWhiteSpace);
+
+  // Get resolution notes information 
+  } else if (message.header === "setResolutionNotes"){
+    resolutionnotes = message.resolutionnotes;
+    console.log("Got Set Resolution Notes Message");
+    console.log(resolutionnotes);
+    sendResponse({header: "successful"});
+    setResolutionNotes();
 
   // Else in this case is do an update for the Comment Resizer
   } else {
@@ -133,4 +147,22 @@ function removeWhiteSpace(fixBool){
     whitespace.style["min-height"] = "auto";
     whitespace.style["max-height"] = "auto";
   }
+}
+
+function setResolutionNotes(){
+    try {
+    var checkbox = document.getElementById("ni.sn_customerservice_case.notes_to_comments").checked;
+  } catch (err){
+    console.log("Mustn't be on the resolution page");
+    return;
+  }
+
+  if(resolutionnotes && checkbox != null){
+    //Check the resolution notes button
+    document.getElementById("ni.sn_customerservice_case.notes_to_comments").checked = true;
+    
+  } else {
+    // Do nothing 
+  }
+
 }
