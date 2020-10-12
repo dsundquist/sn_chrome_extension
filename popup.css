@@ -2,36 +2,74 @@
    Service Now Chrome Extension 
    Popup CSS
    www.deansundquist.com */
+   
+/* https://fonts.google.com/specimen/Source+Sans+Pro 
+   Ripped off from Service now, Its open source see above
+   Using same font to provide a unifrom look  
+*/
+@font-face {
+  font-family: "Open Sans";
+  src: url("./fonts/SourceSansPro-Regular.otf.woff") format("woff"),
+
+}
 
 body {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: "Open Sans Semibold", sans-serif;
+  justify-content: right;
+  font-weight: 500;
   min-width: 250px;
   min-height: 150px;
   border: 0px;
-  background-color: rgb(180, 180, 180);
-  color: white;
-  margin: 2px;
-  margin-bottom: 0px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  text-align: right;
+  margin: 5px;
 }
+
+#heading{
+  font-size: 14px;
+  text-align: center;
+}
+
+.grid-container {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  display: grid;
+  text-align: right;  
+  align-items: center;
+  grid-template-columns: 1fr 0fr;
+  grid-template-rows: 1fr 0fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "topleft topright"
+    "left right"
+}
+.topleft { 
+  text-align: center;
+  grid-area: topleft; 
+}
+.topright { 
+  align-items: bottom;
+  text-align: left;
+  grid-area: topright; 
+}
+.left { 
+  text-align: right;
+  grid-area: left; 
+}
+.right { 
+  text-align: left;
+  grid-area: right; 
+}
+
 
 #main{
   border-top: 3px;
-  background-color: rgb(119, 119, 119);
+  background-color: rgb(255, 255, 255);
   padding: 5px;
 }
 
-#title{
-  margin-bottom: 8px;
-  font-size: 16;
-}
-
-#title2{
-  margin-bottom: 8px;
-  font-size: 16;
-}
-
-#title3{
-  margin-bottom: 8px;
+.title{
   font-size: 16;
 }
 
@@ -39,6 +77,18 @@ body {
 #timer{
   font-size: 32;
   font-weight: 900;
+}
+
+.timer{
+  text-align: center;
+}
+
+.templates{
+  text-align: center;
+}
+
+hr{
+  border-top: 1px solid black;
 }
 
 #inputSize {
@@ -56,9 +106,9 @@ body {
   text-shadow: -50px 0px 0px rgba(66,66,66,.0);
 }
 
-
 .button {
   margin-top: 8px;
+  margin-bottom: 8px;
 	box-shadow:inset 0px 1px 0px 0px #a4e271;
 	background:linear-gradient(to bottom, #b2fa0a 5%, #b3de4d 100%);
 	background-color:#b2fa0a;

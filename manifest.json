@@ -2,7 +2,7 @@
     "manifest_version": 2,
    
     "name": "Reduce Comment Text Box Field for Service Now",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "description": "Adding some custom enhancements to Service Now",
    
     "browser_action" : {
@@ -27,7 +27,5 @@
         "stopwatch.js",
         "background.js"
       ]
-    }
-    
-   
-  }
+    } 
+}
