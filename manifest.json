@@ -18,7 +18,7 @@
       "css": ["styles.css"],
       "js": ["content.js"],
       "all_frames": true,
-      "matches": ["https://corebts.service-now.com/*"]
+      "matches": ["https://*.service-now.com/*"]
       
     }],
 
