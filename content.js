@@ -9,8 +9,11 @@ var maxHeight = 0;
 var fixWhiteSpace = false;
 var resolutionnotes = false;
 
-var callText = "Customer Contact Informed: \n Phone Number/Email Used: \n Time Contacted:  \n Task(s) Performed: \n - Left Voicemail \n Next Step:"
-var newTicketText = "Contact Name: \nContact Phone Number: \nContact Email Address: \n\nSerial Number or Contract Number: \nValidated? (Y/N): \nDevice Make/Model: \nDevice IOS image/Firmware/OS version: \n\nSeverity/Impact of Issue (Number of users affected, locations): \n\nDescription of Issue: \nWhen did it start: \nRecent changes: \nError messages / Indicator lights: \n\nCustomer troubleshooting performed: \n";
+var callText = "\nCustomer Contact Informed: \n Phone Number/Email Used: \n Time Contacted:  \n Task(s) Performed: \n - Left Voicemail \n Next Step:"
+var newTicketText = "\nContact Name: \nContact Phone Number: \nContact Email Address: \n\nSerial Number or Contract Number: \nValidated? (Y/N): \nDevice Make/Model: \nDevice IOS image/Firmware/OS version: \n\nSeverity/Impact of Issue (Number of users affected, locations): \n\nDescription of Issue: \nWhen did it start: \nRecent changes: \nError messages / Indicator lights: \n\nCustomer troubleshooting performed: \n";
+var escalationText = "\nSerial Number or Contract Number: \nValidated? (Y/N): \nDevice Make/Model: \nDevice IOS image/Firmware/OS version: \n\nSeverity/Impact of Issue (Number of users affected, locations): \n\nDescription of Issue: \nWhen did it start: \nRecent changes: \nError messages / Indicator lights: \n\nCustomer troubleshooting performed:"
+var mySignature = "\nDefault Signature\nNeeds To Be Updated\nSee ./Data/Signature.json"
+var savedSignature = "";
 // Used for testing
 console.log("Content Script Created");
 
@@ -18,6 +21,17 @@ console.log("Content Script Created");
 // Send message to background script to get current details 
 window.onload = function(){
   console.log("Initializing values:");
+
+  //load signature from file (if it exists)  
+  const url = chrome.runtime.getURL('data/signature.json');
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      //console.log(data.data);
+      savedSignature = data.data;  
+    });
+
+
   chrome.runtime.sendMessage({header: "init"}, function(response) {  //Send w/ the init status so we don't set any variables
     console.log("Got initial response: ");
     console.log(response);
@@ -52,23 +66,69 @@ function gotMessage(message, sender, sendResponse) {
   if(message.header === "setCallText"){
     console.log("Got Set Text Message!");
     sendResponse({header: "successful"});
-    var textBoxes = document.getElementById("activity-stream-textarea");
-    textBoxes.value = callText;
+    var textBoxes = document.getElementById("activity-stream-comments-textarea");
+    if(textBoxes == null){  //if that didn't work see if we can get the new ticket comment box 
+      textBoxes = document.getElementById("sn_customerservice_case.comments");
+    }
+    textBoxes.value += callText;
     textBoxes.style.height = "140px";
 
   } else if (message.header === "setNewTicketText") {
     console.log("Got Set Text Message!");
     sendResponse({header: "successful"});
     // If I'm on a current ticket
-    var textBoxes = document.getElementById("activity-stream-textarea");
+    var textBoxes = document.getElementById("sn_customerservice_case.description");
     if(textBoxes == null){  //if that didn't work see if we can get the new ticket comment box 
       textBoxes = document.getElementById("sn_customerservice_case.comments");
     }
     if(textBoxes != null){ //now try one of the above should have worked if we were on a legit page 
-      textBoxes.value = newTicketText;
+      textBoxes.value += newTicketText;
       textBoxes.style.height = "320px";
     }
 
+  } else if (message.header === "setEscalation") {
+    console.log("Got Set Text Message!");
+    sendResponse({header: "successful"});
+    // If I'm on a current ticket
+    var textBoxes = document.getElementById("activity-stream-comments-textarea");
+    if(textBoxes == null){  //if that didn't work see if we can get the new ticket comment box 
+      textBoxes = document.getElementById("sn_customerservice_case.comments");
+    }
+    if(textBoxes != null){ //now try one of the above should have worked if we were on a legit page 
+      textBoxes.value += escalationText;
+      textBoxes.style.height = "320px";
+    }
+
+  } else if (message.header === "setSignature") {
+    console.log("Got Set Text Message!");
+    
+    sendResponse({header: "successful"});
+    // If I'm on a current ticket
+    var textBoxes = document.getElementById("activity-stream-comments-textarea");
+    if(textBoxes == null){  //if that didn't work see if we can get the new ticket comment box 
+      textBoxes = document.getElementById("sn_customerservice_case.comments");
+    }
+    if(textBoxes != null){ //now try one of the above should have worked if we were on a legit page 
+      if (savedSignature != ""){
+           mySignature = savedSignature;
+      }
+      textBoxes.value = textBoxes.value + mySignature;
+      var originalHeight = parseInt(textBoxes.style.height,10);
+      var newHeight = 150 + originalHeight;
+      textBoxes.style.height = newHeight + "px";
+    } 
+    
+  } else if (message.header === "saveSignature") {
+
+    console.log("Got Save Signature Message!");
+
+    // message.data could be the new signature
+
+    // save message.data to data.data via POST call to fetch('data/signature.json')
+    
+    sendResponse({header: "successful"});
+    // Reload signature.json
+    
   } else if (message.header === "fixWhiteSpace"){
     fixWhiteSpace = message.fixWhiteSpace;
     console.log("Got Fix Whitespace Message");

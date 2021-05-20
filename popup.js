@@ -73,6 +73,12 @@ contactAttemptButton.addEventListener('click', updateContactAttempt);
 var newTicketButton = document.getElementById("updateNewTicket");
 newTicketButton.addEventListener('click', updateNewTicket);
 
+var newSignature = document.getElementById("updateSignature");
+newSignature.addEventListener('click', updateSignature);
+
+var newEscalation = document.getElementById("updateEscalation");
+newEscalation.addEventListener('click', updateEscalation);
+
 
 
 // When popup.html / .js loads we enter existance as a new page and script
@@ -142,6 +148,29 @@ function updateContactAttempt(){
 function updateNewTicket(){
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {header: "setNewTicketText"}, function(response) {
+      console.log(response.header);
+    });
+  });
+}
+
+function updateSignature(){
+
+  //console.log("Calling updateSignature");
+
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {header: "setSignature"}, function(response) {
+      console.log(response.header);
+    });
+  });
+}
+
+
+function updateEscalation(){
+
+  console.log("Calling updateEscalation");
+
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {header: "setEscalation"}, function(response) {
       console.log(response.header);
     });
   });

@@ -37,10 +37,10 @@ www.deansundquist.com -->
             <i>pixels</i>
             <button class="button" type="submit" id="toggleButton">resize</button>
         </div>       
-        <hr>
+        
 
-        <!-- Second checkbox section -->
-        <div class="grid-container">
+        <!-- Second checkbox section -------------- Removing this no longer necessary  -->
+        <div class="grid-container" style="visibility: hidden; height: 0%;">
             <div class="topright">
                 <b><div class="title" id="title2">Disabled</div></b>
             </div>
@@ -53,7 +53,7 @@ www.deansundquist.com -->
                 </div>
             </div>
         </div>
-        <hr>
+        
 
         <!-- Third checkbox section -->
         <div class="grid-container">
@@ -69,22 +69,38 @@ www.deansundquist.com -->
                 </div>
             </div>
         </div>
-        <hr>
+        
 
-        <!-- Start Timer Section -->
-        <div class="timer">
+        <!-- Start Timer Section   --------------- Removing this, no longer necessary  -->
+        <div class="timer" style="visibility: hidden; height: 0%;">
             <div id="timer">00:00:00</div>
             <button class="button" type="submit" id="startButton">start</button>
             <button class="button" type="submit" id="stopButton">stop</button>
             <button class="button" type="submit" id="resetButton">reset</button>
         </div>
-        <hr>
+        
     
         <!-- Start Template Section -->
         <div class="templates">
+            <button class="button" type="submit" id="updateNewTicket">New Ticket Template</button>
+            <br>
+            <button class="button" type="submit" id="updateEscalation">Escalation Template</button>
+            <br>
             <button class="button" type="submit" id="updateContactAttempt">Contact Template</button>
             <br>
-            <button class="button" type="submit" id="updateNewTicket">New Ticket Template</button>
+            <button class="button" type="submit" id="updateSignature">Add Signature</button>
+            <br>
+
+<!-- <textarea id="mySignature" rows="6" cols="45">
+Dean Sundquist 
+Network Engineer II, Core BTS 
+(NOC) 866-661-7787 | (Direct) 608-661-7799 
+Office Hours: 8:00 - 16:30 EDT (M-F) 
+dean.sundquist@corebts.com
+</textarea>
+            <br>
+            <button class="button" type="submit" id="saveSignature">Save</button>
+            <br> -->
         </div>
     </div>
 

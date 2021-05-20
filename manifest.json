@@ -2,13 +2,18 @@
     "manifest_version": 2,
    
     "name": "Reduce Comment Text Box Field for Service Now",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "description": "Adding some custom enhancements to Service Now",
    
     "browser_action" : {
       "default_title": "Service Now Extension",
       "default_popup": "popup.html"
     },
+
+   
+    "web_accessible_resources": [
+      "data/signature.json"
+    ],
 
     "permissions" : [
       "tabs"
